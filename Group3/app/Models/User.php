@@ -41,4 +41,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $keyType = 'string';
+
+    public function transactionHeaders(){
+        return $this->hasMany(TransactionHeader::class);
+    }
 }

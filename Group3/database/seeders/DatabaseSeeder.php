@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +17,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        User::query()->insert([
+            'id' => Str::uuid(),
+            'name' => 'Dummy Member',
+            'email' => 'member@email.com',
+            'password' => Hash::make('dummydummy'),
+            'role' => 'Member',
+            'created_at' => now()
+        ]);
+        User::query()->insert([
+            'id' => Str::uuid(),
+            'name' => 'Dummy Admin',
+            'email' => 'admin@email.com',
+            'password' => Hash::make('dummydummy'),
+            'role' => 'Admin',
+            'created_at' => now()
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            ProductTypeSeeder::class,
+            ProductSeeder::class
+        ]);
+
     }
 }

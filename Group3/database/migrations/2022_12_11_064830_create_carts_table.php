@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id')->primary()->default(\Illuminate\Support\Str::uuid());
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('role');
+        Schema::create('carts', function (Blueprint $table) {
+            $table->uuid('user_id');
+            $table->uuid('product_id');
+            $table->integer('quantity');
             $table->timestamps();
+
+            $table->primary(['user_id', 'product_id']);
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('carts');
     }
 };
